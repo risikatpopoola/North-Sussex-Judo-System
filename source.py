@@ -121,3 +121,75 @@ def view_athletes():
         print("Coaching Hours:", athlete_details["weekly_coaching_hours"])
         print("Competitions:", athlete_details["competitions_entered"])
 
+
+# UPDATE ATHLETE INFORMATION
+def update_athlete():
+    print("\n--- Update Athlete ---")
+    athlete_name = input("Enter athlete name: ").strip().upper()
+
+    if athlete_name not in athlete_records:
+        print("Athlete not found.")
+        return
+    print("1. Training Plan")
+    print("2. Current Weight")
+    print("3. Competition Weight Category")
+    print("4. Private Coaching Hours")
+
+    update_option = input("Choose the detail to update: ")
+
+    if update_option == "1":
+        updated_training_plan = input(
+            "Enter new training plan: "
+        ).strip().title()
+
+        if updated_training_plan in TRAINING_FEES:
+            athlete_records[athlete_name]["training_plan"] = updated_training_plan
+            print("Training plan updated.")
+        else:
+            print("Invalid training plan.")
+
+    elif update_option == "2":
+        try:
+            updated_weight_kg = float(input("Enter new weight: "))
+            athlete_records[athlete_name]["current_weight_kg"] = updated_weight_kg
+            print("Weight updated.")
+        except ValueError:
+            print("Please enter a valid weight.")
+
+    elif update_option == "3":
+        updated_category = input(
+            "Enter new competition weight category: "
+        ).strip().title()
+
+        if updated_category in WEIGHT_CATEGORIES:
+            athlete_records[athlete_name]["competition_category"] = updated_category
+            print("Weight category updated.")
+        else:
+            print("Invalid weight category.")
+
+    elif update_option == "4":
+        while True:
+            try:
+                updated_coaching_hours = float(
+                    input("Enter new coaching hours: ")
+                )
+
+                if updated_coaching_hours >= 0 and updated_coaching_hours <= 5:
+                    athlete_records[athlete_name]["weekly_coaching_hours"] = updated_coaching_hours
+                    print("Coaching hours updated.")
+                else:
+                    print("Hours cannot be negative or greater than 5.")
+                    updated_coaching_hours = float(
+                                        input("Enter new coaching hours: ")
+                                    )
+
+            except ValueError:
+                print("Please enter a valid number.")
+                updated_coaching_hours = float(
+                                    input("Enter new coaching hours: ")
+                                )
+
+    else:
+        print("Invalid option.")
+
+
