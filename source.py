@@ -103,3 +103,21 @@ def enrol_athlete():
 
     print("Athlete registered successfully!")
 
+
+# VIEW REGISTERED ATHLETES
+
+def view_athletes():
+    print("\n--- Registered Athletes ---")
+
+    if not athlete_records:
+        print("No athletes have been registered.")
+        return
+
+    for athlete_name, athlete_details in athlete_records.items():
+        print("\nAthlete:", athlete_name)
+        print("Training Plan:", athlete_details["training_plan"])
+        print("Current Weight:", athlete_details["current_weight_kg"], "kg")
+        print("Weight Category:", athlete_details["competition_category"])
+        print("Coaching Hours:", athlete_details["weekly_coaching_hours"])
+        print("Competitions:", athlete_details["competitions_entered"])
+
