@@ -249,4 +249,86 @@ def enter_competitions():
         print("Competition entries updated.")
         break
 
+# Section 8: Generate monthly cost report
+
+def generate_monthly_report():
+    print("\n--- Monthly Cost Report ---")
+
+    athlete_name = input("Enter athlete name: ").strip()
+
+    if athlete_name not in athlete_records:
+        print("Athlete not found.")
+        return
+
+    athlete_details = athlete_records[athlete_name]
+    #The weekly training fee is a fixed cost depending on the athletes training plan 
+    weekly_training_fee = TRAINING_FEES[athlete_details["training_plan"]]
+
+   #This varies depending on the number of competitions entered but the base price is a constant
+    competition_cost = (
+        athlete_details["competitions_entered"] *  COMPETITION_FEE
+    )
+
+   #The coaching cost is the base coaching fee multiplied by the number of private coaching hours
+    coaching_cost = (
+        athlete_details["weekly_coaching_hours"] * COACHING_FEE
+    )
+    #  There are four weeks in a month so we multiply the fee by 4
+    training_cost = weekly_training_fee * 4
+
+    total_monthly_cost = (
+        training_cost + competition_cost + coaching_cost
+    )
+
+    print("\nAthlete:", athlete_name)
+    print("Training Cost: £{:.2f}".format(training_cost))
+    print("Competition Cost: £{:.2f}".format(competition_cost))
+    print("Private Coaching Cost: £{:.2f}".format(coaching_cost))
+    print("Total Monthly Cost: £{:.2f}".format(total_monthly_cost))
+
+    selected_category = athlete_details["competition_category"]
+    current_weight_kg = athlete_details["current_weight_kg"]
+    category_upper_limit_kg = WEIGHT_CATEGORIES[selected_category]
+    #This is to help the user know if an athlete needs more training
+    if current_weight_kg <= category_upper_limit_kg:
+        print("Weight is within the selected competition category.")
+    else:
+        print("Weight is above the selected competition category limit.")
+
+
+# SECTION: MAIN MENU
+def main_menu():
+    while True:
+        print("\n===== NORTH SUSSEX JUDO =====")
+        print("1. Register New Athlete")
+        print("2. View Athletes")
+        print("3. Update Athlete Information")
+        print("4. Remove Athlete")
+        print("5. Enter Competitions")
+        print("6. Generate Monthly Cost Report")
+        print("7. Exit Program")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            enrol_athlete()
+        elif choice == "2":
+            view_athletes()
+        elif choice == "3":
+            update_athlete()
+        elif choice == "4":
+            remove_athlete()
+        elif choice == "5":
+            enter_competitions()
+        elif choice == "6":
+            generate_monthly_report()
+        elif choice == "7":
+            print("Thank you for using the program. Goodbye!")
+            break
+        else:
+            print("Invalid option. Please try again.")
+
+
+main_menu()
+
 
