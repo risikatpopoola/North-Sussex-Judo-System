@@ -77,7 +77,7 @@ def enrol_athlete():
     if competition_category not in WEIGHT_CATEGORIES:
         print("Invalid weight category.")
         return
-
+    #This while true loop ensures that the loop doesn't end until the user enters an appropriate number 
     while True:
         try:
             weekly_coaching_hours = float(
@@ -88,7 +88,7 @@ def enrol_athlete():
                 print("Please enter between 0 and 5 hours.")
             else:
                 break
-
+        #The error message needs to be descriptive and useful hence the value error for invalid input
         except ValueError:
             print("Invalid input. Please enter a number.")
 
@@ -112,7 +112,7 @@ def view_athletes():
     if not athlete_records:
         print("No athletes have been registered.")
         return
-
+ #All the athlete's details are printed out 
     for athlete_name, athlete_details in athlete_records.items():
         print("\nAthlete:", athlete_name)
         print("Training Plan:", athlete_details["training_plan"])
@@ -143,6 +143,7 @@ def update_athlete():
         ).strip().title()
 
         if updated_training_plan in TRAINING_FEES:
+            #The updated training plan is being stored in the actaul training plan to ensure consistency of data 
             athlete_records[athlete_name]["training_plan"] = updated_training_plan
             print("Training plan updated.")
         else:
@@ -192,4 +193,23 @@ def update_athlete():
     else:
         print("Invalid option.")
 
+# REMOVING AN ATHLETE
+
+def remove_athlete():
+    print("\n--- Remove Athlete ---")
+
+    athlete_name = input("Enter athlete name: ").strip().upper()
+
+    if athlete_name in athlete_records:
+        #seeks confirmation from user before deleting athlete 
+        confirmation = input(f"Are you sure you'd like to remove{athlete_name}").lower()
+        if confirmation == "yes":    
+            del athlete_records[athlete_name]
+            #outputs a success message so user knows that the athlete has been removed
+            print("Athlete removed successfully.")
+        else:
+            print("Removal cancelled")
+            return
+    else:
+        print("Athlete not found.")
 
