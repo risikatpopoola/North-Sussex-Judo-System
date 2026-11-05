@@ -213,3 +213,40 @@ def remove_athlete():
     else:
         print("Athlete not found.")
 
+# ENTER COMPETITIONS
+
+def enter_competitions():
+    print("\n--- Enter Competitions ---")
+
+    athlete_name = input("Enter athlete name: ").strip().upper()
+
+    if athlete_name not in athlete_records:
+        print("Athlete not found.")
+        return
+
+    athlete_details = athlete_records[athlete_name]
+    #Only Elite and Intermediate athlete can enter competition, the if loop is to filter out beginner athletes
+    if athlete_details["training_plan"] not in ["Intermediate", "Elite"]:
+        print("Beginners cannot enter competitions.")
+        return
+
+    while True:
+        try:
+            competitions_entered = int(
+                input("Enter number of competitions this month: ")
+            )
+            #continue is used after both error messages so that the program can exit the current loop and start the next one prompting
+            #the user to enter the correct value.
+        except ValueError:
+            print("Please enter a whole number.")
+            continue 
+
+        if competitions_entered < 0:
+            print("The number cannot be negative.")
+            continue
+
+        athlete_details["competitions_entered"] = competitions_entered
+        print("Competition entries updated.")
+        break
+
+
