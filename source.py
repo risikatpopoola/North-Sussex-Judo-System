@@ -80,55 +80,72 @@ athlete_records = {
 }
 
 
+
 # Section 3: ENROLLING A NEW ATHLETE
+
 def enrol_athlete():
     print("\n--- Enrol a New Athlete ---")
-     # strip() removes unnecessary spaces at the beginning and at the end of the name
-     #upper() cases the name to uppercase
-    athlete_name = input("Enter athlete name: ").strip().upper()
 
-    if athlete_name == "":
-        print("Athlete name cannot be empty.")
-        return
-     # Checks whether an athlete with this name already exists.
+    # strip() removes unnecessary spaces at the beginning and at the end of the name
+    # upper() cases the name to uppercase
+    while True:
+        athlete_name = input("Enter athlete name: ").strip().upper()
+
+        if athlete_name == "":
+            print("Athlete name cannot be empty.")
+        else:
+            break
+
+    # Checks whether an athlete with this name already exists.
     # This prevents the same athlete from being registered twice.
     if athlete_name in athlete_records:
         print("This athlete is already registered.")
         return
+
     # Ask the user to choose one of the three available plans.
     print("\nTraining Plans: Beginner, Intermediate, Elite")
-    training_plan = input("Enter training plan: ").strip().title()
-    #check if the training plans typed is valid 
-    if training_plan not in TRAINING_FEES:
-        print("Invalid training plan.")
-        return
-    
+
+    # check if the training plans typed is valid
+    while True:
+        training_plan = input("Enter training plan: ").strip().title()
+
+        if training_plan in TRAINING_FEES:
+            break
+
+        print("Invalid training plan. Please try again.")
+
     # Ask for the athlete's current weight in kilograms.
     # float() allows weights containing decimal places.
-    try:
-        current_weight_kg = float(input("Enter current weight in kg: "))
-    # This message appears if the input cannot be converted into a numerical value.
-    except ValueError:
-        print("Please enter a valid weight.")
-        return
+    while True:
+        try:
+            current_weight_kg = float(input("Enter current weight in kg: "))
 
-    if current_weight_kg <= 0:
-        print("Weight must be greater than zero.")
-        return
+            if current_weight_kg > 0:
+                break
+
+            print("Weight must be greater than zero.")
+
+        # This message appears if the input cannot be converted into a numerical value.
+        except ValueError:
+            print("Please enter a valid weight.")
 
     print("\nWeight Categories:")
 
     for category_name in WEIGHT_CATEGORIES:
         print(category_name)
-     # Ask the user to select the athlete's intended competition weight category and capitalise the first letter
-    competition_category = input(
-        "Enter competition weight category: "
-    ).strip().title()
 
-    if competition_category not in WEIGHT_CATEGORIES:
-        print("Invalid weight category.")
-        return
-    #This while true loop ensures that the loop doesn't end until the user enters an appropriate number 
+    # Ask the user to select the athlete's intended competition weight category and capitalise the first letter
+    while True:
+        competition_category = input(
+            "Enter competition weight category: "
+        ).strip().title()
+
+        if competition_category in WEIGHT_CATEGORIES:
+            break
+
+        print("Invalid weight category. Please try again.")
+
+    # This while true loop ensures that the loop doesn't end until the user enters an appropriate number
     while True:
         try:
             weekly_coaching_hours = float(
@@ -139,7 +156,8 @@ def enrol_athlete():
                 print("Please enter between 0 and 5 hours.")
             else:
                 break
-        #The error message needs to be descriptive and useful hence the value error for invalid input
+
+        # The error message needs to be descriptive and useful hence the value error for invalid input
         except ValueError:
             print("Invalid input. Please enter a number.")
 
@@ -153,6 +171,7 @@ def enrol_athlete():
     }
 
     print("Athlete registered successfully!")
+
 
 
 # VIEW REGISTERED ATHLETES
@@ -201,12 +220,22 @@ def update_athlete():
             print("Invalid training plan.")
 
     elif update_option == "2":
-        try:
-            updated_weight_kg = float(input("Enter new weight: "))
-            athlete_records[athlete_name]["current_weight_kg"] = updated_weight_kg
-            print("Weight updated.")
-        except ValueError:
-            print("Please enter a valid weight.")
+
+        while True:
+            try:
+                updated_weight_kg = float(
+                    input("Enter new weight: ")
+                )
+
+                if updated_weight_kg > 0:
+                    athlete_records[athlete_name]["current_weight_kg"] = updated_weight_kg
+                    print("Weight updated.")
+                    break
+
+                print("Weight must be greater than zero.")
+
+            except ValueError:
+                print("Please enter a valid weight.")
 
     elif update_option == "3":
         updated_category = input(
