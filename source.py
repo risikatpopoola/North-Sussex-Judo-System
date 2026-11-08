@@ -247,29 +247,23 @@ def update_athlete():
             print("Weight category updated.")
         else:
             print("Invalid weight category.")
-
     elif update_option == "4":
+
         while True:
             try:
                 updated_coaching_hours = float(
                     input("Enter new coaching hours: ")
                 )
 
-                if updated_coaching_hours >= 0 and updated_coaching_hours <= 5:
+                if 0 <= updated_coaching_hours <= 5:
                     athlete_records[athlete_name]["weekly_coaching_hours"] = updated_coaching_hours
                     print("Coaching hours updated.")
                     break
-                else:
-                    print("Hours cannot be negative or greater than 5.")
-                    updated_coaching_hours = float(
-                                        input("Enter new coaching hours: ")
-                                    )
+
+                print("Hours must be between 0 and 5.")
 
             except ValueError:
                 print("Please enter a valid number.")
-                updated_coaching_hours = float(
-                                    input("Enter new coaching hours: ")
-                                )
 
     else:
         print("Invalid option.")
@@ -335,7 +329,7 @@ def enter_competitions():
 def generate_monthly_report():
     print("\n--- Monthly Cost Report ---")
 
-    athlete_name = input("Enter athlete name: ").strip()
+    athlete_name = input("Enter athlete name: ").strip().upper()
 
     if athlete_name not in athlete_records:
         print("Athlete not found.")
@@ -350,9 +344,9 @@ def generate_monthly_report():
         athlete_details["competitions_entered"] *  COMPETITION_FEE
     )
 
-   #The coaching cost is the base coaching fee multiplied by the number of private coaching hours
+   #The coaching cost is the base coaching fee multiplied by the number of private coaching hours multiplied by 4
     coaching_cost = (
-        athlete_details["weekly_coaching_hours"] * COACHING_FEE
+        athlete_details["weekly_coaching_hours"] * COACHING_FEE * 4
     )
     #  There are four weeks in a month so we multiply the fee by 4
     training_cost = weekly_training_fee * 4
