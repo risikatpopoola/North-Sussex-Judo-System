@@ -1,4 +1,3 @@
-import tkinter as tk
 #Initialising all the constants in the program 
 #PROGRAM CONSTANTS
 #Uppercase names distinguish constants from normal variables
@@ -26,7 +25,59 @@ WEIGHT_CATEGORIES = {
 # Section 2: Store athlete records
 #This dictionary stores all athletes  registered during the current program session
 #They are not saved permanetly to a file or database
-athlete_records = {}
+# PRELOADED ATHLETE RECORDS
+# These records are available when the program starts.
+# They are stored in memory for the current session.
+
+athlete_records = {
+    "AHMAD BELLO TOMIWA": {
+        "training_plan": "Beginner",
+        "current_weight_kg": 68.0,
+        "competition_category": "Lightweight",
+        "weekly_coaching_hours": 1.0,
+        "competitions_entered": 0
+    },
+
+    "AISHA YUSUF": {
+        "training_plan": "Intermediate",
+        "current_weight_kg": 70.0,
+        "competition_category": "Lightweight",
+        "weekly_coaching_hours": 2.0,
+        "competitions_entered": 1
+    },
+
+    "HALIAH POPOOLA": {
+        "training_plan": "Elite",
+        "current_weight_kg": 85.0,
+        "competition_category": "Middleweight",
+        "weekly_coaching_hours": 3.0,
+        "competitions_entered": 2
+    },
+
+    "MARYAM BELLO": {
+        "training_plan": "Beginner",
+        "current_weight_kg": 60.0,
+        "competition_category": "Flyweight",
+        "weekly_coaching_hours": 0.0,
+        "competitions_entered": 0
+    },
+
+    "SAMUEL ADE": {
+        "training_plan": "Intermediate",
+        "current_weight_kg": 78.0,
+        "competition_category": "Light-Middleweight",
+        "weekly_coaching_hours": 1.5,
+        "competitions_entered": 2
+    },
+
+    "ZARA IBRAHIM": {
+        "training_plan": "Elite",
+        "current_weight_kg": 95.0,
+        "competition_category": "Light-Heavyweight",
+        "weekly_coaching_hours": 2.0,
+        "competitions_entered": 3
+    }
+}
 
 
 # Section 3: ENROLLING A NEW ATHLETE
@@ -178,6 +229,7 @@ def update_athlete():
                 if updated_coaching_hours >= 0 and updated_coaching_hours <= 5:
                     athlete_records[athlete_name]["weekly_coaching_hours"] = updated_coaching_hours
                     print("Coaching hours updated.")
+                    break
                 else:
                     print("Hours cannot be negative or greater than 5.")
                     updated_coaching_hours = float(
@@ -308,6 +360,7 @@ def main_menu():
         print("6. Generate Monthly Cost Report")
         print("7. Exit Program")
 
+
         choice = input("Choose an option: ")
 
         if choice == "1":
@@ -327,6 +380,8 @@ def main_menu():
             break
         else:
             print("Invalid option. Please try again.")
+
+
 
 
 main_menu()
