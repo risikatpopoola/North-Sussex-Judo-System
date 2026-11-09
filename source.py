@@ -56,7 +56,7 @@ class Athlete:
 
         competition_cost = self.competitions_entered * COMPETITION_FEE
 
-        coaching_cost = self.weekly_coaching_hours * COACHING_FEE * 4
+        coaching_cost = self.weekly_coaching_hours * COACHING_FEE
 
         total_monthly_cost = training_cost + competition_cost + coaching_cost
 
@@ -352,8 +352,6 @@ def enter_competitions():
 
 # Section 8: Generate monthly cost report
 
-# Section 8: Generate monthly cost report
-
 
 def generate_monthly_report():
     print("\n--- Monthly Cost Report ---")
@@ -382,37 +380,58 @@ def generate_monthly_report():
         print("Weight is above the selected competition category limit.")
 
 
+# EVENT HANDLERS
+
+
+def exit_program():
+    print("Thank you for using the North Sussex Judo Management System.")
+    return False
+
+
+# Maps each menu selection to its event handler
+EVENT_HANDLERS = {
+    "1": enrol_athlete,
+    "2": view_athletes,
+    "3": update_athlete,
+    "4": remove_athlete,
+    "5": enter_competitions,
+    "6": generate_monthly_report,
+    "7": exit_program,
+}
+
+
+# Dispatches the selected event to its handler
+def dispatch_event(event):
+    event_handler = EVENT_HANDLERS.get(event)
+
+    if event_handler is None:
+        print("Invalid option. Please try again.")
+        return True
+
+    return event_handler() is not False
+
+
 # SECTION: MAIN MENU
+# MAIN MENU
+
+
 def main_menu():
-    while True:
-        print("\n===== NORTH SUSSEX JUDO =====")
-        print("1. Register New Athlete")
-        print("2. View Athletes")
-        print("3. Update Athlete Information")
-        print("4. Remove Athlete")
-        print("5. Enter Competitions")
-        print("6. Generate Monthly Cost Report")
-        print("7. Exit Program")
 
-        choice = input("Choose an option: ")
+    running = True
 
-        if choice == "1":
-            enrol_athlete()
-        elif choice == "2":
-            view_athletes()
-        elif choice == "3":
-            update_athlete()
-        elif choice == "4":
-            remove_athlete()
-        elif choice == "5":
-            enter_competitions()
-        elif choice == "6":
-            generate_monthly_report()
-        elif choice == "7":
-            print("Thank you for using the program. Goodbye!")
-            break
-        else:
-            print("Invalid option. Please try again.")
+    while running:
+        print("\n--- North Sussex Judo Management System ---")
+        print("1. Enrol a new athlete")
+        print("2. View registered athletes")
+        print("3. Update athlete information")
+        print("4. Remove an athlete")
+        print("5. Enter competitions")
+        print("6. Generate monthly cost report")
+        print("7. Exit")
+
+        user_choice = input("Choose an option: ")
+
+        running = dispatch_event(user_choice)
 
 
 main_menu()
